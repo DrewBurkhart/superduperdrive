@@ -9,9 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.validation.constraints.NotNull;
-
-
 @Controller
 @RequestMapping("/notes")
 public class NoteController {
@@ -25,11 +22,16 @@ public class NoteController {
     }
 
     @PostMapping()
-    public String createNote(@NotNull Authentication authentication, @NotNull Note note) {
-        User user = userService.getUser(authentication.getName());
-        Integer userId = user.getUserid();
-        note.setUserId(userId);
-        noteService.addNote(note);
+    public String createNote(Authentication authentication, Note note) {
+        if (note.getNoteId() == null) {
+            User user = userService.getUser(authentication.getName());
+            Integer userId = user.getUserid();
+            note.setUserId(userId);
+            noteService.addNote(note);
+        } else {
+            noteService.updateNote(note);
+        }
+        // https://stackoverflow.com/a/57439172
         return "redirect:/home";
     }
 
