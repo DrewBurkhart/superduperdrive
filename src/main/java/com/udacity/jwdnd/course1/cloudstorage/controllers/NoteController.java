@@ -34,14 +34,16 @@ public class NoteController {
             noteService.updateNote(note);
         }
         // https://stackoverflow.com/a/57439172
-        return "redirect:/home";
+        return "redirect:/result?success";
     }
 
     @GetMapping("/delete/{noteId}")
     public String deleteNote(@PathVariable Integer noteId) {
         if (noteService.getNote(noteId) != null) {
             noteService.deleteNote(noteId);
+        } else {
+            return "redirect:/result?error";
         }
-        return "redirect:/home";
+        return "redirect:/result?success";
     }
 }
