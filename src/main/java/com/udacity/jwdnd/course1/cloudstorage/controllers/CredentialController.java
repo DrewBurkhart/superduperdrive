@@ -51,6 +51,11 @@ public class CredentialController {
             credentialService.addCredential(credential);
         } else if (existingCredential != null) {
             if (existingCredential.getUserId().equals(userId)) {
+                String encryptedPassword = encryptionService.encryptValue(
+                        credential.password,
+                        existingCredential.getKey()
+                );
+                credential.setPassword(encryptedPassword);
                 credentialService.updateCredential(credential);
             }
         } else {
