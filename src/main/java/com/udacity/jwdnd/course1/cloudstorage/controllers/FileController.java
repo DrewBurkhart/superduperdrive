@@ -24,7 +24,7 @@ public class FileController {
         this.fileService = fileService;
     }
 
-    // https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/multipart/MultipartFile.html
+//  Help with MultiPartFile: https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/multipart/MultipartFile.html
     @PostMapping()
     public String addFile(Authentication authentication, MultipartFile file) throws IOException {
         User user = userService.getUser(authentication.getName());
@@ -37,7 +37,9 @@ public class FileController {
         return "redirect:/result?success";
     }
 
-//    https://stackoverflow.com/a/29828342
+//  Help with file download:
+//  https://stackoverflow.com/a/29828342,
+//  https://stackoverflow.com/questions/34182523/spring-rest-web-service-return-file-as-resource
     @GetMapping(
             value = "/download/{fileId}",
             produces = MediaType.APPLICATION_OCTET_STREAM_VALUE

@@ -147,7 +147,7 @@ public class HomePage {
 
     public Boolean checkNotesEmpty(WebDriver driver) {
         this.notesTabButton.click();
-//        https://www.browserstack.com/guide/findelement-in-selenium
+//      Help with creating list in Selenium: https://www.browserstack.com/guide/findelement-in-selenium
         List<WebElement> notesList = driver.findElements(By.id("note-title-display"));
         return notesList.size() == 0;
     }
@@ -178,7 +178,7 @@ public class HomePage {
         this.credentialEditButton.click();
 
         wait.until(ExpectedConditions.elementToBeClickable(this.credentialUrlField));
-        // https://stackoverflow.com/a/5746299
+    //  Help with clearing fields in Selenium: https://stackoverflow.com/a/5746299
         this.credentialUrlField.clear();
         this.credentialUsernameField.clear();
         this.credentialPasswordField.clear();
@@ -215,7 +215,6 @@ public class HomePage {
 
     public Boolean checkCredentialsEmpty(WebDriver driver) {
         this.credentialsTabButton.click();
-//        https://www.browserstack.com/guide/findelement-in-selenium
         List<WebElement> credentialsList = driver.findElements(By.id("credential-url-display"));
         return credentialsList.size() == 0;
     }
