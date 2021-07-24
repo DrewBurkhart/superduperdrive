@@ -37,11 +37,11 @@ public class FileController {
         return "redirect:/result?success";
     }
 
+//    https://stackoverflow.com/a/29828342
     @GetMapping(
             value = "/download/{fileId}",
             produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
     )
-//    https://stackoverflow.com/a/29828342
     @ResponseBody
     public byte[] downloadFile(Authentication authentication, @PathVariable Integer fileId) throws Exception {
         User user = userService.getUser(authentication.getName());
