@@ -9,8 +9,8 @@ import java.util.List;
 public interface CredentialMapper {
 
     // CREATE
-    @Insert("INSERT INTO CREDENTIALS (url, username, password, userid) " +
-            "VALUES(#{url}, #{username}, #{password}, #{userId})")
+    @Insert("INSERT INTO CREDENTIALS (url, username, password, key, userid) " +
+            "VALUES(#{url}, #{username}, #{password}, #{key}, #{userId})")
     @Options(useGeneratedKeys = true, keyProperty = "credentialId")
     void addCredential(Credential credential);
 
