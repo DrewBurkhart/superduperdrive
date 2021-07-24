@@ -24,10 +24,15 @@ public class FileController {
         this.fileService = fileService;
     }
 
+    // https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/multipart/MultipartFile.html
     @PostMapping()
     public String addFile(Authentication authentication, MultipartFile file) throws IOException {
         User user = userService.getUser(authentication.getName());
         Integer userId = user.getUserid();
+        String fileName = file.getOriginalFilename();
+        if (fileService.getFileByName(fileName) != null) {
+            return "redirect:/home?duplicate";
+        }
         fileService.addFile(file, userId);
         return "redirect:/result?success";
     }
@@ -36,6 +41,7 @@ public class FileController {
             value = "/download/{fileId}",
             produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
     )
+//    https://stackoverflow.com/a/29828342
     @ResponseBody
     public byte[] downloadFile(Authentication authentication, @PathVariable Integer fileId) throws Exception {
         User user = userService.getUser(authentication.getName());
