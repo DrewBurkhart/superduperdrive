@@ -17,7 +17,6 @@ public class NoteTests {
     private Integer port;
 
     private static WebDriver driver;
-    private LoginPage login;
     private HomePage home;
     private ResultPage result;
 
@@ -36,7 +35,7 @@ public class NoteTests {
     public void beforeEach() {
         String firstName = "Andrew";
         String lastName = "Burkhart";
-        String username = "andrew";
+        String username = "notesUser";
         String password = "reallyreallybadpassword";
 
         driver.get("http://localhost:" + port + "/signup");
@@ -44,7 +43,7 @@ public class NoteTests {
         signup.signup(firstName, lastName, username, password);
 
         driver.get("http://localhost:" + port + "/login");
-        login = new LoginPage(driver);
+        LoginPage login = new LoginPage(driver);
         home = new HomePage(driver);
         result = new ResultPage(driver);
 
@@ -57,7 +56,7 @@ public class NoteTests {
     }
 
     @Test
-    public void testNoteCreation() {
+    public void noteCreationTest() {
         // CREATE NOTE
         String title = "Test Note Title";
         String description = "Test Note Description.";
@@ -68,10 +67,14 @@ public class NoteTests {
         // VALIDATE NOTE EXISTS
         assertEquals(title, note.noteTitle);
         assertEquals(description, note.noteDescription);
+
+        // CLEAN UP AFTER TEST
+        home.deleteNote(driver);
+        result.goHome();
     }
 
     @Test
-    public void testNoteEdit() {
+    public void noteEditTest() {
         // CREATE NOTE
         String title = "Test Note Title";
         String description = "Test Note Description.";
@@ -88,10 +91,14 @@ public class NoteTests {
         // VALIDATE NOTE HAS BEEN UPDATED
         assertEquals(newTitle, note.noteTitle);
         assertEquals(newDescription, note.noteDescription);
+
+        // CLEAN UP AFTER TEST
+        home.deleteNote(driver);
+        result.goHome();
     }
 
     @Test
-    public void testNoteDelete() {
+    public void noteDeleteTest() {
         // CREATE NOTE
         String title = "Test Note Title";
         String description = "Test Note Description.";

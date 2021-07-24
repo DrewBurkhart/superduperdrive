@@ -40,11 +40,11 @@ public class SignupTests {
     }
 
     @Test
-    public void testSignup() throws InterruptedException {
+    public void signupTest() {
         // CREATE USER
         String firstName = "Andrew";
         String lastName = "Burkhart";
-        String username = "andrew";
+        String username = "signupUser";
         String password = "reallyreallybadpassword";
 
         signup.signup(firstName, lastName, username, password);

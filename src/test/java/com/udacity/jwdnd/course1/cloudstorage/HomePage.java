@@ -125,11 +125,12 @@ public class HomePage {
 
     public void deleteNote(WebDriver driver) {
         this.notesTabButton.click();
-
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-
-        wait.until(ExpectedConditions.elementToBeClickable(this.noteDeleteButton));
-        this.noteDeleteButton.click();
+        List<WebElement> notesList = driver.findElements(By.id("note-title-display"));
+        if (!notesList.isEmpty()) {
+            WebDriverWait wait = new WebDriverWait(driver, 10);
+            wait.until(ExpectedConditions.elementToBeClickable(this.noteDeleteButton));
+            this.noteDeleteButton.click();
+        }
     }
 
     public Note readFirstNote(WebDriver driver) {

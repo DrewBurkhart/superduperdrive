@@ -36,7 +36,7 @@ public class CredentialTests {
     public void beforeEach() {
         String firstName = "Andrew";
         String lastName = "Burkhart";
-        String username = "andrew";
+        String username = "credsUser";
         String password = "reallyreallybadpassword";
 
         driver.get("http://localhost:" + port + "/signup");
@@ -57,7 +57,7 @@ public class CredentialTests {
     }
 
     @Test
-    public void testCredentialCreation() {
+    public void credentialCreationTest() {
         // CREATE CREDENTIAL
         String url = "https://google.com";
         String username = "andrew";
@@ -69,10 +69,14 @@ public class CredentialTests {
         // VALIDATE CREDENTIAL EXISTS
         assertEquals(url, credential.url);
         assertEquals(username, credential.username);
+
+        // CLEAN UP AFTER TEST
+        home.deleteCredential(driver);
+        result.goHome();
     }
 
     @Test
-    public void testCredentialEdit() {
+    public void credentialEditTest() {
         // CREATE CREDENTIAL
         String url = "https://google.com";
         String username = "andrew";
@@ -91,10 +95,14 @@ public class CredentialTests {
         // VALIDATE CREDENTIAL HAS BEEN UPDATED
         assertEquals(newUrl, credential.url);
         assertEquals(newUsername, credential.username);
+
+        // CLEAN UP AFTER TEST
+        home.deleteCredential(driver);
+        result.goHome();
     }
 
     @Test
-    public void testCredentialDelete() {
+    public void credentialDeleteTest() {
         // CREATE CREDENTIAL
         String url = "https://google.come";
         String username = "andrew";
