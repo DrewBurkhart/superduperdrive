@@ -39,7 +39,6 @@ public class NoteController {
         } else {
             return "redirect:/result?error";
         }
-        // https://stackoverflow.com/a/57439172
         return "redirect:/result?success";
     }
 

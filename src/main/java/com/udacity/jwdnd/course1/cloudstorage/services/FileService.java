@@ -16,7 +16,6 @@ public class FileService {
         this.fileMapper = fileMapper;
     }
 
-    // CREATE
     public void addFile(MultipartFile mpFile, Integer userId) throws IOException {
         File file = new File(
                 0,
@@ -29,7 +28,6 @@ public class FileService {
         fileMapper.addFile(file);
     }
 
-    // READ
     public List<File> getUserFiles(Integer userId) {
         return fileMapper.getFilesByUser(userId);
     }
@@ -38,9 +36,6 @@ public class FileService {
         return fileMapper.getFileById(fileId);
     }
 
-    // UPDATE
-
-    // DELETE
     public void deleteFile(Integer fileId) {
         fileMapper.deleteFile(fileId);
     }
