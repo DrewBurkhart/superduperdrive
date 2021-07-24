@@ -1,5 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage;
 
+import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
 import com.udacity.jwdnd.course1.cloudstorage.model.Note;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -44,6 +45,36 @@ public class HomePage {
 
     @FindBy(id = "note-description-display")
     private WebElement noteDescriptionDisplay;
+
+    @FindBy(id = "nav-credentials-tab")
+    private WebElement credentialsTabButton;
+
+    @FindBy(id = "credential-create")
+    private WebElement credentialCreateButton;
+
+    @FindBy(id = "credential-url")
+    private WebElement credentialUrlField;
+
+    @FindBy(id = "credential-username")
+    private WebElement credentialUsernameField;
+
+    @FindBy(id = "credential-password")
+    private WebElement credentialPasswordField;
+
+    @FindBy(id = "credential-submit")
+    private WebElement credentialSubmitButton;
+
+    @FindBy(id = "credential-edit")
+    private WebElement credentialEditButton;
+
+    @FindBy(id = "credential-delete")
+    private WebElement credentialDeleteButton;
+
+    @FindBy(id = "credential-url-display")
+    private WebElement credentialUrlDisplay;
+
+    @FindBy(id = "credential-username-display")
+    private WebElement credentialUsernameDisplay;
 
     public HomePage(WebDriver webDriver) {
         PageFactory.initElements(webDriver, this);
@@ -118,5 +149,73 @@ public class HomePage {
 //        https://www.browserstack.com/guide/findelement-in-selenium
         List<WebElement> notesList = driver.findElements(By.id("note-title-display"));
         return notesList.size() == 0;
+    }
+
+    public void createCredential(String url, String username, String password, WebDriver driver) {
+        this.credentialsTabButton.click();
+
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+
+        wait.until(ExpectedConditions.elementToBeClickable(this.credentialCreateButton));
+        this.credentialCreateButton.click();
+
+        wait.until(ExpectedConditions.elementToBeClickable(this.credentialUrlField));
+        this.credentialUrlField.sendKeys(url);
+        this.credentialUsernameField.sendKeys(username);
+        this.credentialPasswordField.sendKeys(password);
+
+        wait.until(ExpectedConditions.elementToBeClickable(this.credentialSubmitButton));
+        this.credentialSubmitButton.click();
+    }
+
+    public void updateCredential(String url, String username, String password, WebDriver driver) {
+        this.credentialsTabButton.click();
+
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+
+        wait.until(ExpectedConditions.elementToBeClickable(this.credentialEditButton));
+        this.credentialEditButton.click();
+
+        wait.until(ExpectedConditions.elementToBeClickable(this.credentialUrlField));
+        // https://stackoverflow.com/a/5746299
+        this.credentialUrlField.clear();
+        this.credentialUsernameField.clear();
+        this.credentialPasswordField.clear();
+        this.credentialUrlField.sendKeys(url);
+        this.credentialUsernameField.sendKeys(username);
+        this.credentialPasswordField.sendKeys(password);
+
+        wait.until(ExpectedConditions.elementToBeClickable(this.credentialSubmitButton));
+        this.credentialSubmitButton.click();
+    }
+
+    public void deleteCredential(WebDriver driver) {
+        this.credentialsTabButton.click();
+
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+
+        wait.until(ExpectedConditions.elementToBeClickable(this.credentialDeleteButton));
+        this.credentialDeleteButton.click();
+    }
+
+    public Credential readFirstCredential(WebDriver driver) {
+        this.credentialsTabButton.click();
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.elementToBeClickable(this.credentialUrlDisplay));
+        return new Credential(
+                0,
+                this.credentialUrlDisplay.getText(),
+                this.credentialUsernameDisplay.getText(),
+                "",
+                "",
+                0
+        );
+    }
+
+    public Boolean checkCredentialsEmpty(WebDriver driver) {
+        this.credentialsTabButton.click();
+//        https://www.browserstack.com/guide/findelement-in-selenium
+        List<WebElement> credentialsList = driver.findElements(By.id("credential-url-display"));
+        return credentialsList.size() == 0;
     }
 }
