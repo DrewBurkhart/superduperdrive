@@ -27,11 +27,15 @@ public class NoteController {
     public String createNote(Authentication authentication, Note note) {
         User user = userService.getUser(authentication.getName());
         Integer userId = user.getUserid();
-        if (note.getNoteId() == null) {
+        Integer noteId = note.getNoteId();
+        Note existingNote = noteService.getNote(noteId);
+        if (noteId == null) {
             note.setUserId(userId);
             noteService.addNote(note);
-        } else if (note.getUserId().equals(userId)) {
-            noteService.updateNote(note);
+        } else if (existingNote != null) {
+            if (existingNote.getUserId().equals(userId)) {
+                noteService.updateNote(note);
+            }
         } else {
             return "redirect:/result?error";
         }
