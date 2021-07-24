@@ -25,6 +25,9 @@
                     <div class="tab-pane fade show active" id="nav-files" role="tabpanel" aria-labelledby="nav-files-tab">
                         <form action="#" th:action="@{/files}" th:object="${newFile}" enctype="multipart/form-data" method="POST">
                             <div class="container">
+                                <div class="alert alert-danger" th:if="${param.duplicate}">
+                                    Duplicate File Name
+                                </div>
                                 <div class="row" style="margin: 1em;">
                                     <div class="col-sm-2">
                                         <label for="fileUpload">Upload a New File:</label>
@@ -56,7 +59,7 @@
                                             th:href="${'/files/delete/' + file.fileId}"
                                         >Delete</a>
                                     </td>
-                                    <th scope="row" th:text="${file}"></th>
+                                    <th scope="row" th:text="${file.fileName}"></th>
                                 </tr>
                                 </tbody>
                             </table>
