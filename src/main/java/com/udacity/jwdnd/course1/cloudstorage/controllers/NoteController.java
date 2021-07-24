@@ -25,22 +25,31 @@ public class NoteController {
 
     @PostMapping()
     public String createNote(Authentication authentication, Note note) {
+        User user = userService.getUser(authentication.getName());
+        Integer userId = user.getUserid();
         if (note.getNoteId() == null) {
-            User user = userService.getUser(authentication.getName());
-            Integer userId = user.getUserid();
             note.setUserId(userId);
             noteService.addNote(note);
-        } else {
+        } else if (note.getUserId().equals(userId)) {
             noteService.updateNote(note);
+        } else {
+            return "redirect:/result?error";
         }
         // https://stackoverflow.com/a/57439172
         return "redirect:/result?success";
     }
 
     @GetMapping("/delete/{noteId}")
-    public String deleteNote(@PathVariable Integer noteId) {
-        if (noteService.getNote(noteId) != null) {
-            noteService.deleteNote(noteId);
+    public String deleteNote(@PathVariable Integer noteId, Authentication authentication) {
+        User user = userService.getUser(authentication.getName());
+        Integer userId = user.getUserid();
+        Note note = noteService.getNote(noteId);
+        if (note != null) {
+            if (note.getUserId().equals(userId)) {
+                noteService.deleteNote(noteId);
+            } else {
+                return "redirect:/result?error";
+            }
         } else {
             return "redirect:/result?error";
         }
