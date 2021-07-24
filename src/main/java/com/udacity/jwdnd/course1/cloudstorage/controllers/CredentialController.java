@@ -25,22 +25,31 @@ public class CredentialController {
 
     @PostMapping()
     public String createNote(Authentication authentication, Credential credential) {
+        User user = userService.getUser(authentication.getName());
+        Integer userId = user.getUserid();
         if (credential.getCredentialId() == null) {
-            User user = userService.getUser(authentication.getName());
-            Integer userId = user.getUserid();
             credential.setUserId(userId);
             credentialService.addCredential(credential);
-        } else {
+        } else if (credential.getUserId().equals(userId)) {
             credentialService.updateCredential(credential);
+        } else {
+            return "redirect:/result?error";
         }
         // https://stackoverflow.com/a/57439172
         return "redirect:/result?success";
     }
 
     @GetMapping("/delete/{credentialId}")
-    public String deleteCredential(@PathVariable Integer credentialId) {
-        if (credentialService.getCredential(credentialId) != null) {
-            credentialService.deleteCredential(credentialId);
+    public String deleteCredential(@PathVariable Integer credentialId, Authentication authentication) {
+        User user = userService.getUser(authentication.getName());
+        Integer userId = user.getUserid();
+        Credential credential = credentialService.getCredential(credentialId);
+        if (credential != null) {
+            if (credential.getUserId().equals(userId)) {
+                credentialService.deleteCredential(credentialId);
+            } else {
+                return "redirect:/result?error";
+            }
         } else {
             return "redirect:/result?error";
         }
