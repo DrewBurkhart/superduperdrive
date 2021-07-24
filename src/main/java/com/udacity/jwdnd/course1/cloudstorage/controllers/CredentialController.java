@@ -24,7 +24,7 @@ public class CredentialController {
     }
 
     @PostMapping()
-    public String createNote(Authentication authentication, Credential credential) {
+    public String createCredential(Authentication authentication, Credential credential) {
         User user = userService.getUser(authentication.getName());
         Integer userId = user.getUserid();
         if (credential.getCredentialId() == null) {
