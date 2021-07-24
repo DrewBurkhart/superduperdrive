@@ -59,7 +59,7 @@ public class CredentialTests {
     @Test
     public void testCredentialCreation() {
         // CREATE CREDENTIAL
-        String url = "https://google.come";
+        String url = "https://google.com";
         String username = "andrew";
         String password = "reallyreallybadpassword";
         home.createCredential(url, username, password, driver);
