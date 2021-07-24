@@ -25,24 +25,6 @@ public class NoteService {
         return noteMapper.getAllNotes();
     }
 
-// TODO: Add exception handling
-//    public List<Note> getUserNotes(Integer userId) throws Exception {
-//        List<Note> notes = noteMapper.getNotesByUser(userId);
-//        if (notes == null) {
-//            throw new Exception();
-//        }
-//        return notes;
-//    }
-//
-// TODO: Add exception handling
-//    public Note getNote(Integer noteId) throws Exception {
-//        Note note = noteMapper.getNoteById(noteId);
-//        if (note == null) {
-//            throw new Exception();
-//        }
-//        return note;
-//    }
-
     public List<Note> getUserNotes(Integer userId) {
         return noteMapper.getNotesByUser(userId);
     }
