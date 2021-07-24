@@ -1,16 +1,13 @@
 package com.udacity.jwdnd.course1.cloudstorage;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class SignupTests {
@@ -44,6 +41,7 @@ public class SignupTests {
 
     @Test
     public void testSignup() throws InterruptedException {
+        // CREATE USER
         String firstName = "Andrew";
         String lastName = "Burkhart";
         String username = "andrew";
@@ -52,14 +50,17 @@ public class SignupTests {
         signup.signup(firstName, lastName, username, password);
         login.login(username, password);
 
+        // VALIDATE LOGIN SUCCESS
         assertEquals(home.checkAccess(), "Files");
 
         home.logout();
 
+        // VALIDATE LOGOUT SUCCESS
         assertEquals(login.checkLogout(), "You have been logged out");
 
         driver.get("http://localhost:" + port + "/home");
 
+        // VALIDATE HOME PAGE CAN NO LONGER BE ACCESSED
         assertEquals(login.checkAccess(), "Login");
     }
 }
