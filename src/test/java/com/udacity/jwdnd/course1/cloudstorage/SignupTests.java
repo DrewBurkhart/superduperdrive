@@ -63,4 +63,19 @@ public class SignupTests {
         // VALIDATE HOME PAGE CAN NO LONGER BE ACCESSED
         assertEquals(login.checkAccess(), "Login");
     }
+    @Test
+    public void duplicateSignupTest() {
+        // CREATE USER
+        String firstName = "Andrew";
+        String lastName = "Burkhart";
+        String username = "dupUser";
+        String password = "reallyreallybadpassword";
+
+        signup.signup(firstName, lastName, username, password);
+        driver.get("http://localhost:" + port + "/signup");
+        signup.signup(firstName, lastName, username, password);
+
+        // VALIDATE LOGIN FAILURE
+        assertEquals(signup.checkError(), "The username already exists.");
+    }
 }

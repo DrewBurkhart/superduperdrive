@@ -22,6 +22,9 @@ public class SignupPage {
     @FindBy(id = "submitButton")
     private WebElement submitButton;
 
+    @FindBy(id = "error")
+    private WebElement errorMessage;
+
     public SignupPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
@@ -32,5 +35,9 @@ public class SignupPage {
         this.usernameField.sendKeys(username);
         this.passwordField.sendKeys(password);
         this.submitButton.click();
+    }
+
+    public String checkError() {
+        return this.errorMessage.getText();
     }
 }

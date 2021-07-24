@@ -36,6 +36,10 @@ public class LoginPage {
         return loginTitle.getText();
     }
 
+    public String checkError() {
+        return loginTitle.getText();
+    }
+
     public String checkLogout() {
         return logoutMessage.getText();
     }
