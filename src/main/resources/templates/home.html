@@ -28,6 +28,14 @@
                                 <div class="alert alert-danger" th:if="${param.duplicate}">
                                     Duplicate File Name
                                 </div>
+
+                                <div class="alert alert-danger" th:if="${param.nofile}">
+                                    Please select a file to upload
+                                </div>
+
+                                <div class="alert alert-danger" th:if="${param.maxsize}">
+                                    Please choose a file that is less than 100MB
+                                </div>
                                 <div class="row" style="margin: 1em;">
                                     <div class="col-sm-2">
                                         <label for="fileUpload">Upload a New File:</label>

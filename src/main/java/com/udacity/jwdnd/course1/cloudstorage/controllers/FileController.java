@@ -29,6 +29,12 @@ public class FileController {
     public String addFile(Authentication authentication, MultipartFile file) throws IOException {
         User user = userService.getUser(authentication.getName());
         Integer userId = user.getUserid();
+        if (file.isEmpty()) {
+            return "redirect:/home?nofile";
+        }
+        if (file.getSize() > 100000000) {
+            return "redirect:/home?maxsize";
+        }
         String fileName = file.getOriginalFilename();
         if (fileService.getFileByName(fileName) != null) {
             return "redirect:/home?duplicate";
